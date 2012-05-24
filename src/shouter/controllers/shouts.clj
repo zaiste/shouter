@@ -17,4 +17,4 @@
 
 (defroutes routes
            (GET "/" [] (index))
-           (POST "/" {params :params} (create params)))
+           (POST "/new" {params :params} (create params)))
