@@ -4,16 +4,18 @@
             [compojure.route :as route]
             [compojure.handler :as handler]
             [shouter.controllers.shouts]
-            [shouter.views.layout :as layout]))
+            [shouter.views.layout :as layout])
+  (:use [ring.middleware reload]))
 
 (defroutes routes
            shouter.controllers.shouts/routes
+           (route/resources "/")
            (route/not-found (layout/four-oh-four)))
 
-(def application (handler/site routes))
+(def application (wrap-reload (handler/site routes)))
 
 (defn start [port]
-  (ring/run-jetty #'routes {:port (or port 8080) :join? false}))
+  (ring/run-jetty #'application {:port (or port 8080) :join? false}))
 
 (defn -main []
   (let [port (Integer. (System/getenv "PORT"))]
