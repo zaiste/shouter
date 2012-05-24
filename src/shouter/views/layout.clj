@@ -7,11 +7,25 @@
     (doctype :html5)
     [:head 
      [:meta {:charset "utf-8"}]
-     [:title title]]
+     [:title title]
+     (include-css "/css/bootstrap.min.css"
+                  "/css/bootstrap-responsive.min.css"
+                  "/css/style.css")]
     [:body
-     [:div {:id "header"}
-      [:h1 {:class "container"} "SHOUTER"]]
-     [:div {:id "content" :class "container"} body]]))
+     (list
+       [:div.navbar.navbar-fixed-top {"data-toggle" "data-target"}
+        [:div.navbar-inner
+         [:div.container
+          [:a.btn.btn-navbar
+           [:span.icon-bar]]
+          [:a.brand "Shouter"]
+          [:div.nav-collapse
+           [:ul.nav
+            [:li.active
+             [:a {"href" "#"} "Home"]]
+            [:li
+             [:a {"href" "https://devcenter.heroku.com/articles/clojure-web-application"} "Source"]]]]]]]
+       [:div#content.container body])]))
 
 (defn four-oh-four []
   (common "Page not found"
